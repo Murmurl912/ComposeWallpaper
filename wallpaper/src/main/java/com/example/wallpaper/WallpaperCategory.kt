@@ -6,7 +6,7 @@ interface WallpaperCategory {
 
     fun title(): String
 
-    fun description(): String
+    fun description(): String?
 
     fun covers(): List<WallpaperPhoto>
 

@@ -2,10 +2,10 @@ package com.example.wallpaper
 
 interface WallpaperAuthor {
 
-    fun name(): String
+    fun name(): String?
 
-    fun link(): String
+    fun link(): String?
 
-    fun avatar(): String
+    fun avatar(): String?
 
 }

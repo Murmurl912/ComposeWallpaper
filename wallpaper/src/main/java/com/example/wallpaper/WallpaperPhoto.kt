@@ -12,7 +12,7 @@ interface WallpaperPhoto {
 
     fun blur(): String?
 
-    fun color(): Int
+    fun color(): Int?
 
     fun wallpaper(): String
 
@@ -21,8 +21,6 @@ interface WallpaperPhoto {
     fun thumbnail(): String
 
     fun author(): WallpaperAuthor?
-
-    fun title(): String
 
     fun description(): String?
 
