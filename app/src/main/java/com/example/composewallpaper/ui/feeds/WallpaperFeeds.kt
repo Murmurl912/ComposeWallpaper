@@ -9,10 +9,12 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.GridView
@@ -32,6 +34,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,6 +51,8 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.composewallpaper.ui.support.BlurHashDecoder
+import com.example.wallpaper.WallpaperCategory
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,6 +64,9 @@ fun WallpaperFeeds(
     },
     state: WallpaperFeedState = remember {
         WallpaperFeedState.Loading
+    },
+    onSelect: (WallpaperCategory) -> Unit = {
+
     }
 ) {
     var gridView by remember {
@@ -105,7 +113,7 @@ fun WallpaperFeeds(
                         .weight(1F)
                         .fillMaxWidth(),
 
-                    gridViewState.value, state)
+                    gridViewState.value, state, onSelect)
             }
 
             WallpaperFeedState.Loading -> {
@@ -126,17 +134,24 @@ fun WallpaperFeeds(
 fun WallpaperFeedContent(
     modifier: Modifier = Modifier,
     gridView: Boolean,
-    feed: WallpaperFeedState.Loaded) {
+    feed: WallpaperFeedState.Loaded,
+    onSelect: (WallpaperCategory) -> Unit
+) {
     val index = remember(feed) {
         feed.categoryState.categories.indexOf(feed.categoryState.category)
     }
 
     Column(modifier) {
 
+        val pagerState = rememberPagerState()
+
+        val scope = rememberCoroutineScope()
         ScrollableTabRow(selectedTabIndex = index, Modifier.fillMaxWidth()) {
             for (category in feed.categoryState.categories) {
-                Tab(selected = category == feed.categoryState.category, onClick = { /*TODO*/ }) {
-                    Text(text = category.title())
+                Tab(selected = category == feed.categoryState.category, onClick = {
+                    onSelect(category)
+                }) {
+                    Text(text = category.title(), Modifier.padding(horizontal = 12.dp))
                 }
             }
         }
@@ -166,7 +181,9 @@ fun WallpaperFeedContent(
                         ColorPainter(Color(wallpaper.color()))
                     }
                     val blurPainter: Painter? = remember(itemSize) {
-                        val bitmap = BlurHashDecoder.decode(wallpaper.blur(), itemSize.width, itemSize.height)
+                        val bitmap = kotlin.runCatching {
+                            BlurHashDecoder.decode(wallpaper.blur(), itemSize.width, itemSize.height)
+                        }.getOrNull()
                         if (bitmap == null) {
                             null
                         } else {

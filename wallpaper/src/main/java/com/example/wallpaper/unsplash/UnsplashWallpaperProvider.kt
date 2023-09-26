@@ -20,12 +20,28 @@ class UnsplashWallpaperProvider(
         page: Int?,
         perPage: Int?
     ): List<WallpaperPhoto> {
-        // use topic as WallpaperCategory
-        TODO("Not yet implemented")
+        val photos = if (category != null) {
+            unsplashApi.topicPhotos(
+                category.id(),
+                page,
+                perPage
+            )
+        } else {
+            unsplashApi.photos(page, perPage)
+        }
+        return photos.map {
+            UnsplashWallpaperPhoto(it)
+        }
     }
 
     override suspend fun categories(page: Int?, perPage: Int?): List<WallpaperCategory> {
-        TODO("Not yet implemented")
+        return unsplashApi.topics(page = page, perPage = perPage)
+            .map {
+                UnsplashWallpaperCategory(
+                    it
+                )
+            }
+
     }
 
     override suspend fun search(
@@ -36,7 +52,11 @@ class UnsplashWallpaperProvider(
         page: Int?,
         perPage: Int?
     ): List<WallpaperPhoto> {
-        TODO("Not yet implemented")
+        return unsplashApi.searchPhotos(query, page, perPage, orientation = orientation?.name)
+            .results
+            .map {
+                UnsplashWallpaperPhoto(it)
+            }
     }
 }
 
@@ -90,8 +110,8 @@ data class UnsplashWallpaperPhoto(
         return photo.blur_hash
     }
 
-    override fun color(): Int? {
-        return photo.color.toHexColor()
+    override fun color(): Int {
+        return photo.color.toHexColor() ?: 0
     }
 
     override fun wallpaper(): String {

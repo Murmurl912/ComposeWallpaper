@@ -1,8 +1,10 @@
 package com.example.unsplash.model
 
 import android.os.Parcelable
+import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class UnsplashPhoto(
     val id: String,
@@ -29,6 +31,7 @@ data class UnsplashPhoto(
     val statistics: PhotoStatistics?,
 ) : Parcelable
 
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class Exif(
     val make: String?,
@@ -39,6 +42,7 @@ data class Exif(
     val iso: Int?,
 ) : Parcelable
 
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class Location(
     val title: String?,
@@ -46,21 +50,26 @@ data class Location(
     val city: String?,
     val country: String?,
     val position: Position?,
-) : Parcelable {
+) : Parcelable
 
-}
+
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class Position(
     val latitude: Double?,
     val longitude: Double?,
 ) : Parcelable
 
+
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class PhotoTag(
     val type: String?,
     val title: String?,
 ) : Parcelable
 
+
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class PhotoUrls(
     val raw: String,
@@ -70,6 +79,8 @@ data class PhotoUrls(
     val thumb: String
 ) : Parcelable
 
+
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class PhotoLinks(
     val self: String,
@@ -78,11 +89,15 @@ data class PhotoLinks(
     val download_location: String,
 ) : Parcelable
 
+
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class Sponsorship(
     val sponsor: UnsplashUser?
 ) : Parcelable
 
+
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class PhotoStatistics(
     val id: String,
@@ -91,24 +106,32 @@ data class PhotoStatistics(
     val likes: PhotoLikes,
 ) : Parcelable
 
+
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class PhotoDownloads(
     val total: Int,
     val historical: Historical,
 ) : Parcelable
 
+
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class PhotoViews(
     val total: Int,
     val historical: Historical,
 ) : Parcelable
 
+
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class PhotoLikes(
     val total: Int,
     val historical: Historical,
 ) : Parcelable
 
+
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class Historical(
     val change: Int,
@@ -117,6 +140,8 @@ data class Historical(
     val values: List<Value>,
 ) : Parcelable
 
+
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class Value(
     val date: String,

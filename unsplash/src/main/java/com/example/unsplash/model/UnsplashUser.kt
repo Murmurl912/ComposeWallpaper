@@ -1,9 +1,11 @@
 package com.example.unsplash.model
 
 import android.os.Parcelable
+import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
 
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class UnsplashUser(
     val id: String,
@@ -30,6 +32,8 @@ data class UnsplashUser(
     val photos: List<UnsplashPhoto>?,
 ) : Parcelable
 
+
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class UnsplashProfileImage(
     val small: String,
@@ -37,6 +41,8 @@ data class UnsplashProfileImage(
     val large: String,
 ) : Parcelable
 
+
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class UnsplashBadge(
     val title: String?,
@@ -45,6 +51,8 @@ data class UnsplashBadge(
     val link: String?,
 ) : Parcelable
 
+
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class UnsplashUserLinks(
     val self: String,

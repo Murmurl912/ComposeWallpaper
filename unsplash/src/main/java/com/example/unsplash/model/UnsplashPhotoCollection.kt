@@ -1,8 +1,11 @@
 package com.example.unsplash.model
 
 import android.os.Parcelable
+import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
+
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class UnsplashPhotoCollection(
     val id: Int,
@@ -22,6 +25,8 @@ data class UnsplashPhotoCollection(
     val links: UnsplashCollectionLinks?,
 ) : Parcelable
 
+
+@JsonClass(generateAdapter = true)
 @Parcelize
 data class UnsplashCollectionLinks(
     val self: String,

@@ -1,5 +1,9 @@
 package com.example.unsplash.model
 
+import com.squareup.moshi.JsonClass
+
+
+@JsonClass(generateAdapter = true)
 data class UnsplashTopic(
     val id: String,
     val slug: String,
@@ -17,9 +21,9 @@ data class UnsplashTopic(
     val status: String,
     val owners: List<UnsplashUser>,
     val cover_photo: UnsplashPhoto?,
-    val preview_photos: List<UnsplashPhoto>?
 )
 
+@JsonClass(generateAdapter = true)
 data class UnsplashTopicLinks(
     val self: String?,
     val html: String?,

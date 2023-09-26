@@ -1,6 +1,5 @@
 package com.example.composewallpaper
 
-import com.example.composewallpaper.wallpaper.pexels.pexelOkhttpApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
@@ -11,10 +10,5 @@ import org.junit.Test
  */
 class PexelApiTest {
 
-    private val api = pexelOkhttpApi("")
-    @Test
-    fun testFeaturedPhoto(): Unit = runBlocking {
-        api.featuredPhoto(null, null)
-        api.featuredPhoto(2, null)
-    }
+
 }

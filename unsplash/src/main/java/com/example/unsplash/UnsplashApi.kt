@@ -6,6 +6,11 @@ import com.example.unsplash.model.UnsplashPhotoCollection
 import com.example.unsplash.model.UnsplashSearchResult
 import com.example.unsplash.model.UnsplashTopic
 import com.example.unsplash.model.UnsplashUser
+import com.squareup.moshi.Moshi
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
@@ -17,14 +22,14 @@ interface UnsplashApi {
     @GET("/search/photos")
     suspend fun searchPhotos(
         @Query("query") query: String,
-        @Query("page") page: Int?,
-        @Query("per_page") perPage: Int?,
-        @Query("order_by") orderBy: String?,
-        @Query("collections") collections: String?,
-        @Query("content_filter") contentFilter: String?,
-        @Query("color") color: String?,
-        @Query("orientation") orientation: String?,
-        @Query("lang") lang: String?
+        @Query("page") page: Int? = null,
+        @Query("per_page") perPage: Int? = null,
+        @Query("order_by") orderBy: String? = null,
+        @Query("collections") collections: String? = null,
+        @Query("content_filter") contentFilter: String? = null,
+        @Query("color") color: String? = null,
+        @Query("orientation") orientation: String? = null,
+        @Query("lang") lang: String? = null
     ): UnsplashSearchResult<UnsplashPhoto>
 
     @GET("/search/collections")
@@ -139,7 +144,7 @@ interface UnsplashApi {
      * 获取Topic列表
      */
     @GET("/topics")
-    suspend fun getTopics(
+    suspend fun topics(
         @Query("ids")
         ids: String? = null,
         @Query("page")
@@ -154,16 +159,36 @@ interface UnsplashApi {
      * @param id topic的id或者slug
      */
     @GET("/topics/:id")
-    suspend fun getTopic(@Path("id") id: String): UnsplashTopic
+    suspend fun topic(@Path("id") id: String): UnsplashTopic
 
     /**
      * 获取Topic下的图片
      * @param id topic的id或者slug
      */
     @GET("/topics/{id}/photos")
-    suspend fun getPhotos(@Path("id") id: String,
+    suspend fun topicPhotos(@Path("id") id: String,
                   @Query("page") page: Int? = null,
                   @Query("per_page") perPage: Int? = null,
                   @Query("orientation") orientation: String? = null,
                   @Query("order_by") orderBy: String? = null): List<UnsplashPhoto>
+
+
+    companion object {
+
+        fun create(): UnsplashApi {
+            val client = OkHttpClient.Builder()
+                .addInterceptor(HttpLoggingInterceptor().apply {
+                    setLevel(HttpLoggingInterceptor.Level.BODY)
+                })
+                .addInterceptor(UnsplashAuthInterceptor(UnsplashApiAuthProvider()))
+                .build()
+
+            val retrofit = Retrofit.Builder()
+                .client(client)
+                .baseUrl("https://api.unsplash.com/v1/")
+                .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
+                .build()
+            return retrofit.create(UnsplashApi::class.java)
+        }
+    }
 }
