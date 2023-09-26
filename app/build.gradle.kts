@@ -1,3 +1,6 @@
+import dependency.SdkVersion
+import dependency.Dependencies
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -6,14 +9,14 @@ plugins {
 
 android {
     namespace = "com.example.composewallpaper"
-    compileSdk = 33
+    compileSdk = SdkVersion.COMPILE_SDK
 
     defaultConfig {
         applicationId = "com.example.composewallpaper"
-        minSdk = 24
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = SdkVersion.ANDROID_MIN_SDK
+        targetSdk = SdkVersion.TARGET_SDK
+        versionCode = SdkVersion.APP_VERSION_CODE
+        versionName = SdkVersion.APP_VERSION_NAME
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -31,17 +34,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = SdkVersion.SOURCE_JAVA_VERSION
+        targetCompatibility = SdkVersion.TARGET_JAVA_VERSION
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = SdkVersion.KOTLIN_JVM_TARGET
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = SdkVersion.COMPOSE_COMPILER_EXTENSION
     }
     packaging {
         resources {
@@ -50,32 +53,32 @@ android {
     }
 }
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(SdkVersion.KOTLIN_JVM_TOOLCHAIN)
 }
 dependencies {
 
-    /*Moshi*/
-    val moshiVersion = "1.14.0"
-    implementation("com.squareup.moshi:moshi:$moshiVersion")
-    implementation("com.squareup.moshi:moshi-adapters:$moshiVersion")
-    kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation(Dependencies.Moshi)
+    implementation(Dependencies.MoshiAdapters)
+    kapt(Dependencies.MoshiCodeGen)
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.activity:activity-compose:1.7.0")
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.material:material-icons-extended")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation(Dependencies.Retrofit)
+    implementation(Dependencies.RetrofitMoshiConverter)
+
+    implementation(Dependencies.AndroidxCoreKtx)
+    implementation(Dependencies.LifecycleRuntimeKtx)
+    implementation(Dependencies.ActivityCompose)
+    implementation(platform(Dependencies.ComposeBom))
+    implementation(Dependencies.ComposeUi)
+    implementation(Dependencies.ComposeUiGraphics)
+    implementation(Dependencies.ComposeUiToolingPreview)
+    implementation(Dependencies.ComposeMaterial3)
+    implementation(Dependencies.ComposeMaterialIconExtended)
+
+    testImplementation(Dependencies.Junit)
+    androidTestImplementation(Dependencies.AndroidxTestExtJunit)
+    androidTestImplementation(Dependencies.AndroidTestEspressoCore)
+    androidTestImplementation(platform(Dependencies.ComposeBom))
+    androidTestImplementation(Dependencies.AndroidxComposeUiTestJunit)
+    debugImplementation(Dependencies.ComposeUiTooling)
+    debugImplementation(Dependencies.ComposeUiTestManifest)
 }

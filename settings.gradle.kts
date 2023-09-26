@@ -15,4 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "ComposeWallpaper"
 include(":app")
- 
+include(":unsplash")
+include(":pexels")
+include(":wallpaper")
