@@ -1,6 +1,6 @@
 package com.example.unsplash
 
-import com.example.unsplash.model.Photo
+import com.example.unsplash.model.UnsplashPhoto
 import com.example.unsplash.model.PhotoStatistics
 import retrofit2.Call
 import retrofit2.http.GET
@@ -20,7 +20,7 @@ interface PhotoApi {
     @GET("/photos")
     fun photos(@Query("page") page: Int? = null,
                @Query("per_page") perPage: Int? = null,
-               @Query("order_by") orderBy: String? = null): Call<List<Photo>>
+               @Query("order_by") orderBy: String? = null): Call<List<UnsplashPhoto>>
 
     /**
      * 获取单张图片
@@ -28,7 +28,7 @@ interface PhotoApi {
      */
     @Headers("Accept-Version: v1")
     @GET("/photos/{id}")
-    fun photo(@Path("id") id: String): Call<Photo>
+    fun photo(@Path("id") id: String): Call<UnsplashPhoto>
 
     /**
      * 获取一张随机图片。collections, topics 不能同时与query使用
@@ -46,7 +46,7 @@ interface PhotoApi {
                @Query("username") username: String? = null,
                @Query("query") query: String? = null,
                @Query("orientation") orientation: String? = null,
-               @Query("content_filter") content_filter: String? = null): Call<Photo>
+               @Query("content_filter") content_filter: String? = null): Call<UnsplashPhoto>
 
     /**
      * 获取一组随机图片。collections, topics 不能同时与query使用
@@ -66,7 +66,7 @@ interface PhotoApi {
                @Query("query") query: String? = null,
                @Query("orientation") orientation: String? = null,
                @Query("content_filter") contentFilter: String? = null,
-               @Query("count") count: Int): Call<List<Photo>>
+               @Query("count") count: Int): Call<List<UnsplashPhoto>>
 
     /**
      * 获取图片的统计信息，如下载，查看，点赞等

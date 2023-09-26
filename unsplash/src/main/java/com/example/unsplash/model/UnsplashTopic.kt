@@ -1,6 +1,6 @@
 package com.example.unsplash.model
 
-data class Topic(
+data class UnsplashTopic(
     val id: String,
     val slug: String,
     val title: String,
@@ -13,14 +13,14 @@ data class Topic(
     val visibility: String?,
     val featured: Boolean?,
     val total_photos: Int?,
-    val links: TopicLinks?,
+    val links: UnsplashTopicLinks?,
     val status: String,
-    val owners: List<User>,
-    val cover_photo: Photo?,
-    val preview_photos: List<Photo>?
+    val owners: List<UnsplashUser>,
+    val cover_photo: UnsplashPhoto?,
+    val preview_photos: List<UnsplashPhoto>?
 )
 
-data class TopicLinks(
+data class UnsplashTopicLinks(
     val self: String?,
     val html: String?,
     val photos: String?

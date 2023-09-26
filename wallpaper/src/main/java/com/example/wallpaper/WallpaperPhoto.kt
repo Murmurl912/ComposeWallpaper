@@ -8,6 +8,8 @@ interface WallpaperPhoto {
 
     fun height(): Int
 
+    fun ratio(): Float
+
     fun blur(): String?
 
     fun color(): Int

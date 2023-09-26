@@ -38,5 +38,8 @@ android {
 
 dependencies {
 
+    implementation(project(":unsplash"))
+    implementation(project(":pexels"))
+
     testImplementation(Dependencies.Junit)
 }

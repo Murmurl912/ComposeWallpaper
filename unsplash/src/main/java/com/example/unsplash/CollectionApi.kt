@@ -1,7 +1,7 @@
 package com.example.unsplash
 
-import com.example.unsplash.model.Photo
-import com.example.unsplash.model.PhotoCollection
+import com.example.unsplash.model.UnsplashPhoto
+import com.example.unsplash.model.UnsplashPhotoCollection
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -9,18 +9,19 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface CollectionApi {
+
     @Headers("Accept-Version: v1")
     @GET("/collections")
     fun collections(
         @Query("page") page: Int?,
         @Query("per_page") perPage: Int?
-    ): Call<List<PhotoCollection>>
+    ): Call<List<UnsplashPhotoCollection>>
 
     @Headers("Accept-Version: v1")
     @GET("/collections/{id}")
     fun collection(
         @Path("id") id: String
-    ): Call<PhotoCollection>
+    ): Call<UnsplashPhotoCollection>
 
 
     @Headers("Accept-Version: v1")
@@ -29,10 +30,10 @@ interface CollectionApi {
         @Path("id") id: String,
         @Query("page") page: Int?,
         @Query("per_page") perPage: Int?,
-        @Query("orientation") orientation: String?): Call<List<Photo>>
+        @Query("orientation") orientation: String?): Call<List<UnsplashPhoto>>
 
     @Headers("Accept-Version: v1")
     @GET("/collections/{id}/related")
-    fun relatedCollection(@Path("id") id: String): List<PhotoCollection>
+    fun relatedCollection(@Path("id") id: String): List<UnsplashPhotoCollection>
 
 }

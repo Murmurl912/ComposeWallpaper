@@ -2,9 +2,9 @@ package com.example.wallpaper
 
 interface WallpaperService {
 
-    suspend fun wallpapers(): List<WallpaperPhoto>
+    suspend fun wallpapers(category: WallpaperCategory? = null, page: Int?, perPage: Int?): List<WallpaperPhoto>
 
-    suspend fun searchWallpapers(
+    suspend fun search(
         query: String,
         color: Int?,
         orientation: PhotoOrientation? = null,
@@ -13,7 +13,7 @@ interface WallpaperService {
         perPage: Int? = null
     )
 
-    suspend fun collections(page: Int?, perPage: Int?): List<WallpaperCollection>
+    suspend fun categories(page: Int?, perPage: Int?): List<WallpaperCategory>
 
     suspend fun setWallpaper(photo: WallpaperPhoto, screen: WallpaperScreen)
 
@@ -23,7 +23,7 @@ interface WallpaperService {
 
     suspend fun favorites(page: Int?, perPage: Int?): List<WallpaperPhoto>
 
-    suspend fun recentWallpapers(): List<WallpaperPhoto>
+    suspend fun recent(page: Int?, perPage: Int?): List<WallpaperPhoto>
 
     enum class PhotoOrientation {
         Landscape,

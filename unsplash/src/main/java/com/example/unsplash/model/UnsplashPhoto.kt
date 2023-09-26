@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Photo(
+data class UnsplashPhoto(
     val id: String,
     val created_at: String?,
     val updated_at: String?,
@@ -21,11 +21,11 @@ data class Photo(
     val exif: Exif?,
     val location: Location?,
     val tags: List<PhotoTag>?,
-    val current_user_collection: List<PhotoCollection>?,
+    val current_user_collection: List<UnsplashPhotoCollection>?,
     val sponsorship: Sponsorship?,
     val urls: PhotoUrls,
     val links: PhotoLinks?,
-    val user: User?,
+    val user: UnsplashUser?,
     val statistics: PhotoStatistics?,
 ) : Parcelable
 
@@ -80,7 +80,7 @@ data class PhotoLinks(
 
 @Parcelize
 data class Sponsorship(
-    val sponsor: User?
+    val sponsor: UnsplashUser?
 ) : Parcelable
 
 @Parcelize

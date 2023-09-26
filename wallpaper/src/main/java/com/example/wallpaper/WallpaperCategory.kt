@@ -1,15 +1,15 @@
 package com.example.wallpaper
 
-interface WallpaperCollection {
+interface WallpaperCategory {
 
     fun id(): String
 
     fun title(): String
 
-    fun description(): String?
+    fun description(): String
 
     fun covers(): List<WallpaperPhoto>
 
-    fun photoCounts(): Int
+    fun totalPhotos(): Int
 
 }

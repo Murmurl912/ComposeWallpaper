@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 
 @Parcelize
-data class User(
+data class UnsplashUser(
     val id: String,
     val updated_at: String?,
     val username: String?,
@@ -24,21 +24,21 @@ data class User(
     val followers_count: Int?,
     val following_count: Int?,
     val downloads: Int?,
-    val profile_image: ProfileImage?,
-    val badge: Badge?,
-    val links: UserLinks?,
-    val photos: List<Photo>?,
+    val profile_image: UnsplashProfileImage?,
+    val badge: UnsplashBadge?,
+    val links: UnsplashUserLinks?,
+    val photos: List<UnsplashPhoto>?,
 ) : Parcelable
 
 @Parcelize
-data class ProfileImage(
+data class UnsplashProfileImage(
     val small: String,
     val medium: String,
     val large: String,
 ) : Parcelable
 
 @Parcelize
-data class Badge(
+data class UnsplashBadge(
     val title: String?,
     val primary: Boolean?,
     val slug: String?,
@@ -46,7 +46,7 @@ data class Badge(
 ) : Parcelable
 
 @Parcelize
-data class UserLinks(
+data class UnsplashUserLinks(
     val self: String,
     val html: String,
     val photos: String,

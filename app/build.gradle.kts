@@ -59,6 +59,7 @@ dependencies {
 
     implementation(Dependencies.Moshi)
     implementation(Dependencies.MoshiAdapters)
+    implementation("com.google.android.material:material:1.9.0")
     kapt(Dependencies.MoshiCodeGen)
 
     implementation(Dependencies.Retrofit)
@@ -73,6 +74,10 @@ dependencies {
     implementation(Dependencies.ComposeUiToolingPreview)
     implementation(Dependencies.ComposeMaterial3)
     implementation(Dependencies.ComposeMaterialIconExtended)
+
+
+    implementation(project(":wallpaper"))
+    implementation(Dependencies.ColiCompose)
 
     testImplementation(Dependencies.Junit)
     androidTestImplementation(Dependencies.AndroidxTestExtJunit)

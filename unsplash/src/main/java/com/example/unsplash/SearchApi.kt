@@ -1,9 +1,9 @@
 package com.example.unsplash
 
-import com.example.unsplash.model.Photo
-import com.example.unsplash.model.PhotoCollection
-import com.example.unsplash.model.SearchResult
-import com.example.unsplash.model.User
+import com.example.unsplash.model.UnsplashPhoto
+import com.example.unsplash.model.UnsplashPhotoCollection
+import com.example.unsplash.model.UnsplashSearchResult
+import com.example.unsplash.model.UnsplashUser
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -21,20 +21,20 @@ interface SearchApi {
         @Query("color") color: String?,
         @Query("orientation") orientation: String?,
         @Query("lang") lang: String?
-    ): Call<SearchResult<Photo>>
+    ): Call<UnsplashSearchResult<UnsplashPhoto>>
 
     @GET("/search/collections")
     fun searchCollections(
         @Query("query") query: String,
         @Query("page") page: Int?,
         @Query("per_page") perPage: Int?
-    ): Call<SearchResult<PhotoCollection>>
+    ): Call<UnsplashSearchResult<UnsplashPhotoCollection>>
 
     @GET("/search/users")
     fun searchUsers(
         @Query("query") query: String,
         @Query("page") page: Int?,
         @Query("per_page") perPage: Int?
-    ): Call<SearchResult<User>>
+    ): Call<UnsplashSearchResult<UnsplashUser>>
 
 }

@@ -1,7 +1,7 @@
 package com.example.unsplash
 
-import com.example.unsplash.model.Photo
-import com.example.unsplash.model.Topic
+import com.example.unsplash.model.UnsplashPhoto
+import com.example.unsplash.model.UnsplashTopic
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -21,14 +21,14 @@ interface TopicApi {
         @Query("per_page")
         perPage: Int? = null,
         @Query("order_by")
-        orderBy: String? = null): Call<List<Topic>>
+        orderBy: String? = null): Call<List<UnsplashTopic>>
 
     /**
      * 获取Topic详情
      * @param id topic的id或者slug
      */
     @GET("/topics/:id")
-    fun getTopic(@Path("id") id: String): Call<Topic>
+    fun getTopic(@Path("id") id: String): Call<UnsplashTopic>
 
     /**
      * 获取Topic下的图片
@@ -39,6 +39,6 @@ interface TopicApi {
                   @Query("page") page: Int? = null,
                   @Query("per_page") perPage: Int? = null,
                   @Query("orientation") orientation: String? = null,
-                  @Query("order_by") orderBy: String? = null): Call<List<Photo>>
+                  @Query("order_by") orderBy: String? = null): Call<List<UnsplashPhoto>>
 
 }

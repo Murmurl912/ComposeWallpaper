@@ -26,4 +26,11 @@ object Dependencies {
     const val AndroidxTestExtJunit = "androidx.test.ext:junit:1.1.5"
     const val AndroidTestEspressoCore = "androidx.test.espresso:espresso-core:3.5.1"
     const val AndroidxComposeUiTestJunit = "androidx.compose.ui:ui-test-junit4"
+
+    const val HiltAndroid = "com.google.dagger:hilt-android:${Versions.HlitAndroid}"
+    const val HiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${Versions.HiltAndroidCompiler}"
+    const val HiltComposeNavigation = "androidx.hilt:hilt-navigation-compose:${Versions.HiltComposeNavigation}"
+    const val HlitAndroidTest = "com.google.dagger:hilt-android-testing:${Versions.HlitAndroid}"
+
+    const val ColiCompose = "io.coil-kt:coil-compose:${Versions.KoltinCompose}"
 }
