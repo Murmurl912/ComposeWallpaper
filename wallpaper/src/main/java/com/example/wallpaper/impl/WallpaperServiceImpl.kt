@@ -1,38 +1,31 @@
 package com.example.wallpaper.impl
 
+import androidx.paging.PagingSource
 import com.example.wallpaper.WallpaperCategory
+import com.example.wallpaper.WallpaperCategoryPagingSource
 import com.example.wallpaper.WallpaperPhoto
 import com.example.wallpaper.WallpaperProvider
+import com.example.wallpaper.WallpaperSearchPagingSource
 import com.example.wallpaper.WallpaperService
+import com.example.wallpaper.WallpapersPagingSource
 
 class WallpaperServiceImpl(private val provider: WallpaperProvider): WallpaperService {
-    override suspend fun wallpapers(
-        category: WallpaperCategory?,
-        page: Int?,
-        perPage: Int?
-    ): Result<List<WallpaperPhoto>> {
-        return kotlin.runCatching {
-            provider.wallpapers(category, page, perPage)
-        }
+
+    override fun wallpapers(category: WallpaperCategory?): PagingSource<Int, WallpaperPhoto> {
+        return WallpapersPagingSource(provider, category)
     }
 
-    override suspend fun search(
+    override fun search(
         query: String,
         color: Int?,
         orientation: WallpaperService.PhotoOrientation?,
         orderBy: WallpaperService.PhotoOrder?,
-        page: Int?,
-        perPage: Int?
-    ): Result<List<WallpaperPhoto>> {
-        return kotlin.runCatching {
-            provider.search(query, color, orientation, orderBy, page, perPage)
-        }
+    ): PagingSource<Int, WallpaperPhoto> {
+        return WallpaperSearchPagingSource(provider, query, color, orientation, orderBy)
     }
 
-    override suspend fun categories(page: Int?, perPage: Int?): Result<List<WallpaperCategory>> {
-        return kotlin.runCatching {
-            provider.categories(page, perPage)
-        }
+    override fun categories(): PagingSource<Int, WallpaperCategory> {
+        return WallpaperCategoryPagingSource(provider)
     }
 
     override suspend fun setWallpaper(
@@ -50,11 +43,11 @@ class WallpaperServiceImpl(private val provider: WallpaperProvider): WallpaperSe
         TODO("Not yet implemented")
     }
 
-    override suspend fun favorites(page: Int?, perPage: Int?): List<WallpaperPhoto> {
+    override suspend fun favorites(page: Int?, perPage: Int?): PagingSource<Int, WallpaperPhoto> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun recent(page: Int?, perPage: Int?): List<WallpaperPhoto> {
+    override suspend fun recent(page: Int?, perPage: Int?): PagingSource<Int, WallpaperPhoto> {
         TODO("Not yet implemented")
     }
 }

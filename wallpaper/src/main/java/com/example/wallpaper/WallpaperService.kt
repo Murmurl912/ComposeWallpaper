@@ -1,5 +1,6 @@
 package com.example.wallpaper
 
+import androidx.paging.PagingSource
 import com.example.unsplash.UnsplashApi
 import com.example.wallpaper.impl.WallpaperServiceImpl
 import com.example.wallpaper.unsplash.UnsplashWallpaperPhoto
@@ -7,20 +8,16 @@ import com.example.wallpaper.unsplash.UnsplashWallpaperProvider
 
 interface WallpaperService {
 
-    suspend fun wallpapers(category: WallpaperCategory? = null,
-                           page: Int? = null,
-                           perPage: Int? = null): Result<List<WallpaperPhoto>>
+    fun wallpapers(category: WallpaperCategory? = null): PagingSource<Int, WallpaperPhoto>
 
-    suspend fun search(
+    fun search(
         query: String,
         color: Int?,
         orientation: PhotoOrientation? = null,
         orderBy: PhotoOrder? = null,
-        page: Int? = null,
-        perPage: Int? = null
-    ): Result<List<WallpaperPhoto>>
+    ): PagingSource<Int, WallpaperPhoto>
 
-    suspend fun categories(page: Int?, perPage: Int?): Result<List<WallpaperCategory>>
+    fun categories(): PagingSource<Int, WallpaperCategory>
 
     suspend fun setWallpaper(photo: WallpaperPhoto, screen: WallpaperScreen)
 
@@ -28,9 +25,9 @@ interface WallpaperService {
 
     suspend fun unfavorite(photo: WallpaperPhoto)
 
-    suspend fun favorites(page: Int?, perPage: Int?): List<WallpaperPhoto>
+    suspend fun favorites(page: Int?, perPage: Int?): PagingSource<Int, WallpaperPhoto>
 
-    suspend fun recent(page: Int?, perPage: Int?): List<WallpaperPhoto>
+    suspend fun recent(page: Int?, perPage: Int?): PagingSource<Int, WallpaperPhoto>
 
     enum class PhotoOrientation {
         Landscape,

@@ -33,4 +33,7 @@ object Dependencies {
     const val HlitAndroidTest = "com.google.dagger:hilt-android-testing:${Versions.HlitAndroid}"
 
     const val ColiCompose = "io.coil-kt:coil-compose:${Versions.KoltinCompose}"
+
+    const val AndroidxPaging3RuntimeKtx = "androidx.paging:paging-runtime-ktx:${Versions.AndroidXPaging3}"
+    const val AndroidxPaging3Compose = "androidx.paging:paging-compose:${Versions.AndroidXPaging3}"
 }

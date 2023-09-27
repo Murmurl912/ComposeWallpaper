@@ -11,4 +11,5 @@ object Versions {
     const val HiltAndroidCompiler = "2.44"
     const val KoltinCompose = "2.4.0"
     const val HiltComposeNavigation = "1.0.0"
+    const val AndroidXPaging3 = "3.2.0"
 }

@@ -75,9 +75,11 @@ dependencies {
     implementation(Dependencies.ComposeMaterial3)
     implementation(Dependencies.ComposeMaterialIconExtended)
 
-
     implementation(project(":wallpaper"))
     implementation(Dependencies.ColiCompose)
+
+    implementation(Dependencies.AndroidxPaging3Compose)
+    implementation(Dependencies.AndroidxPaging3RuntimeKtx)
 
     testImplementation(Dependencies.Junit)
     androidTestImplementation(Dependencies.AndroidxTestExtJunit)

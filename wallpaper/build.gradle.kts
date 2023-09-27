@@ -41,5 +41,8 @@ dependencies {
     implementation(project(":unsplash"))
     implementation(project(":pexels"))
 
+    implementation(Dependencies.AndroidxPaging3Compose)
+    implementation(Dependencies.AndroidxPaging3RuntimeKtx)
+
     testImplementation(Dependencies.Junit)
 }

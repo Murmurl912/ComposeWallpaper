@@ -1,69 +1,91 @@
 package com.example.composewallpaper.ui.feeds
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.ui.tooling.preview.Wallpaper
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.wallpaper.WallpaperCategory
+import com.example.wallpaper.WallpaperPhoto
 import com.example.wallpaper.WallpaperService
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.onSubscription
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.atomic.AtomicReference
 
-class FeedsViewModel(): ViewModel() {
+class FeedsViewModel: ViewModel() {
 
     private val service = WallpaperService.create()
+    private val wallpapersCache: MutableMap<WallpaperCategory, Flow<PagingData<WallpaperPhoto>>> = ConcurrentHashMap()
 
+    val categories = Pager(
+        config = PagingConfig(
+            pageSize = 15,
+            enablePlaceholders = false,
+            initialLoadSize = 30
+        ),
+        pagingSourceFactory = {
+            service.categories()
+        }
+    ).flow.cachedIn(viewModelScope)
 
-    private val state: MutableStateFlow<WallpaperFeedState> = MutableStateFlow(WallpaperFeedState.Loading)
-
-    val feedsState = state.asStateFlow()
-
-    init {
-        refresh()
-    }
-    fun refresh() {
-        viewModelScope.launch {
-            val categories = service.categories(1, 20)
-                .onFailure {
-                    state.value = WallpaperFeedState.Failure(it.message?:"Unable to load categories")
-                }.getOrNull()
-            if (categories == null) {
-                return@launch
-            }
-            if ( categories.isEmpty()) {
-                state.value = WallpaperFeedState.Failure("Unable to load categories")
-                return@launch
-            }
-
-            val category = categories.first()
-
-            service.wallpapers(category)
-                .onFailure {
-                    state.value = WallpaperFeedState.Failure("Unable to load wallpapers")
+    fun wallpapers(category: WallpaperCategory): Flow<PagingData<WallpaperPhoto>> {
+        return wallpapersCache.computeIfAbsent(category) {
+            Pager(
+                config = PagingConfig(
+                    pageSize = 15,
+                    enablePlaceholders = false,
+                    initialLoadSize = 30
+                ),
+                pagingSourceFactory = {
+                    service.wallpapers(category)
                 }
-                .onSuccess {
-                    state.value = WallpaperFeedState.Loaded(
-                        WallpaperCategoryListState(
-                            false,
-                            category,
-                            categories
-                        ),
-                        WallpaperPhotoListState(
-                            false,
-                            it
-                        )
-                    )
-                }
-
-
+            ).flow.cachedIn(viewModelScope)
         }
     }
 
+
     fun select(category: WallpaperCategory) {
 
-
     }
+
+}
+
+
+
+data class CategoryListState(
+    val category: WallpaperCategory? = null,
+    val categories: List<WallpaperCategory> = emptyList(),
+    val loadingState: LoadMoreState = LoadMoreState()
+)
+
+data class WallpaperListState(
+    val category: WallpaperCategory? = null,
+    val wallpapers: List<WallpaperPhoto> = emptyList(),
+    val loadingState: LoadMoreState = LoadMoreState(),
+)
+
+data class LoadMoreState(
+    val page: Int = 0,
+    val perPage: Int = 0,
+    val offset: Int = 0,
+    val status: LoadingStatus = LoadingStatus.StatusIdle
+)
+
+sealed interface LoadingStatus {
+
+    data class StatusFailure(
+        val message: String? = "",
+    ): LoadingStatus
+
+    object StatusLoading: LoadingStatus
+
+    object StatusIdle: LoadingStatus
+
 }
